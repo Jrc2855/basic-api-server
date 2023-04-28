@@ -6,13 +6,13 @@ const { customerModel } = require('../models');
 const router = express.Router();
 
 router.get('/customer', async (req, res, next) => {
-  const customers = await customerModel.findAll();
+  const customers = await customerModel.read();
   res.status(200).send(customers);
 });
 
 router.get('/customer/:id', async (req, res, next) => {
-  const customers = await customerModel.findByPk(req.params.id);
-  res.status(200).send(customers);
+  const customer = await customerModel.read(req.params.id);
+  res.status(200).send(customer);
 });
 
 router.post('/customer', async (req, res, next) => {
@@ -26,13 +26,13 @@ router.post('/customer', async (req, res, next) => {
 });
 
 router.put('/customer/:id', async (req, res, next) => {
-  let updatedCustomer = await customerModel.update(req.body, {where: {id: req.params.id}});
+  let updatedCustomer = await customerModel.update(req.body, req.params.id);
   res.status(200).json(updatedCustomer);
 });
 
 router.delete('/customer/:id', async (req, res, next) => {
-  await customerModel.destroy({where: {id: req.params.id}});
-  res.status(200).send('deleted');
+  let message = await customerModel.delete(req.params.id);
+  res.status(200).send(message);
 });
 
 module.exports = router;
