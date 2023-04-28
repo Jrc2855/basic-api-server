@@ -10,6 +10,11 @@ router.get('/product', async (req, res, next) => {
   res.status(200).send(products);
 });
 
+router.get('/product/:id', async (req, res, next) => {
+  const products = await productModel.findByPk(req.params.id);
+  res.status(200).send(products);
+});
+
 router.get('/product', async (req, res, next) => {
   const product = await productModel.findOne();
   res.status(200).send(product);
@@ -25,14 +30,14 @@ router.post('/product', async (req, res, next) => {
   }
 });
 
-router.put('/product', async (req, res, next) => {
-  let updatedProduct = await productModel.update(req.body);
+router.put('/product/:id', async (req, res, next) => {
+  let updatedProduct = await productModel.update(req.body, {where: {id: req.params.id}});
   res.status(200).json(updatedProduct);
 });
 
-router.delete('/product', async (req, res, next) => {
-  let deletedProduct = await productModel.delete();
-  res.status(200).delete(deletedProduct);
+router.delete('/product/:id', async (req, res, next) => {
+  await productModel.destroy({where: {id: req.params.id}});
+  res.status(200).delete('deleted');
 });
 
 module.exports = router;
