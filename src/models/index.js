@@ -1,7 +1,7 @@
 'use strict';
 
 require('dotenv').config();
-const { Sequelize, Datatypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const customer = require('./customer');
 const product = require('./product');
 
@@ -12,8 +12,8 @@ const DATABASE_URL = process.env.NODE_ENV === 'test'
 
 const sequelizeDatabase = new Sequelize(DATABASE_URL);
 
-const customerModel = customer(sequelizeDatabase, Datatypes);
-const productModel = product(sequelizeDatabase, Datatypes);
+const customerModel = customer(sequelizeDatabase, DataTypes);
+const productModel = product(sequelizeDatabase, DataTypes);
 
 module.exports = {
   sequelizeDatabase,
