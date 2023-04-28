@@ -12,6 +12,7 @@ router.get('/customer', async (req, res, next) => {
 
 router.post('/customer', async (req, res, next) => {
   try {
+    console.log('this is the request body', req.body);
     const newCustomer = await customerModel.create(req.body);
     res.status(200).send(newCustomer);
   } catch(e){
